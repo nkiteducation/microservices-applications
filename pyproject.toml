@@ -1,0 +1,15 @@
+[project]
+name = "microservices-applications"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "fastapi>=0.118.0",
+    "loguru>=0.7.3",
+    "orjson>=3.11.3",
+    "sqlalchemy[asyncio]>=2.0.43",
+    "uvicorn>=0.37.0",
+    "uvloop>=0.21.0",
+]
