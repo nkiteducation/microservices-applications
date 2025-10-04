@@ -29,4 +29,5 @@ class SessionManager:
             await session.close()
             await self.scoped_session.remove()
 
+
 session = SessionManager()
