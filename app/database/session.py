@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import (
     async_scoped_session,
 )
 import asyncio
+from app.core.settings import config
 
 
 class SessionManager:
@@ -30,4 +31,4 @@ class SessionManager:
             await self.scoped_session.remove()
 
 
-session = SessionManager()
+session = SessionManager(config.database.url.encoded_string())
