@@ -39,7 +39,7 @@ application_technology = Table(
 )
 
 
-class Applications(CoreModel, ID, Timestamp):
+class Application(CoreModel, ID, Timestamp):
     __tablename__ = "applications"
 
     first_name: Mapped[str]
@@ -60,6 +60,6 @@ class Technologles(CoreModel, ID, Timestamp):
     name: Mapped[str]
     description: Mapped[str]
 
-    applications: Mapped[list[Applications]] = relationship(
+    applications: Mapped[list[Application]] = relationship(
         secondary=application_technology, back_populates="technologies"
     )
