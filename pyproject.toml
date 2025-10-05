@@ -10,6 +10,7 @@ dependencies = [
     "fastapi>=0.118.0",
     "gunicorn>=23.0.0",
     "orjson>=3.11.3",
+    "phonenumbers>=9.0.15",
     "pydantic-extra-types>=2.10.5",
     "pydantic-settings>=2.11.0",
     "pydantic[email]>=2.11.9",
