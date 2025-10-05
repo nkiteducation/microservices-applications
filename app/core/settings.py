@@ -8,6 +8,7 @@ class CoreSettings(BaseSettings):
         env_file=Path(".").rglob(".env"),
         env_file_encoding="utf-8",
         extra="ignore",
+        env_nested_delimiter="__",
     )
 
 
