@@ -1,32 +1,47 @@
 from datetime import datetime
-import enum
-from uuid import UUID
-from pydantic import BaseModel, Field, EmailStr
 from typing import Annotated
+from uuid import UUID
+
+from pydantic import BaseModel, EmailStr, Field, model_validator
+from pydantic_core import PydanticCustomError
 from pydantic_extra_types.phone_numbers import PhoneNumberValidator
-from phonenumbers import PhoneNumberFormat
+
+from app.core.enum import ContactMethod
 
 RE_NAME = r"^[\p{L}\s-]{5,50}+$"
 RE_TELEGRAM = r"^[A-Za-z0-9_.]{5,}+$"
-RE_TECHNOLOGIES = r"^[\p{L}0-9 +#\.]{2,50}$"
-
-
-class ContactMethod(enum.Enum):
-    EMAIL = "email"
-    PHONE = "phone"
-    TELEGRAM = "telegram"
+RE_TECHNOLOGIES = r"^[\p{L}0-9\s+#\.]{2,50}$"
 
 
 class RequestsApplication(BaseModel):
-    first_name: Annotated[str, Field(alias="ferstName", pattern=RE_NAME)]
-    last_name: Annotated[str, Field(alias="lastName", pattern=RE_NAME)]
-    contact_method: Annotated[ContactMethod, Field(alias="contactMethod")]
-    phone: Annotated[str, PhoneNumberValidator("UA", "E164")]
-    email: EmailStr
-    telegram: Annotated[str, Field(pattern=RE_TELEGRAM)]
-    technologies: list[Annotated[str, Field(pattern=RE_TECHNOLOGIES)]]
+    first_name: Annotated[str, Field(alias="ferstName", pattern=RE_NAME)] = (
+        "testFirstName"
+    )
+    last_name: Annotated[str, Field(alias="lastName", pattern=RE_NAME)] = "testLastName"
+    contact_method: Annotated[ContactMethod, Field(alias="contactMethod")] = (
+        ContactMethod.EMAIL
+    )
+    phone: Annotated[str, PhoneNumberValidator("UA", "E164")] | None = 380501051478
+    email: EmailStr | None = "testEmail@gmail.com"
+    telegram: Annotated[str, Field(pattern=RE_TELEGRAM)] | None = "test_telegram.name"
+    technologies: list[Annotated[str, Field(pattern=RE_TECHNOLOGIES)]] = [
+        "Python",
+        "FastAPI",
+        "SQLalchemy",
+    ]
 
-    model_config = {"populate_by_name": True}
+    model_config = {"populate_by_name": True, "from_attributes": True}
+
+    @model_validator(mode="after")
+    def check_contact_method(self):
+        method = self.contact_method.value
+        if not getattr(self, method):
+            raise PydanticCustomError(
+                "missing_contact_value",
+                f"The “{method}” field must be filled in.",
+            )
+
+        return self
 
 
 class ResponsesApplication(RequestsApplication):
