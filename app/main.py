@@ -1,13 +1,13 @@
 import logging
 from contextlib import asynccontextmanager
 
+from app.api.endpoin import routed
+from app.core import logger
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from app.api.endpoin import routed
-
-logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger("app")
+logger.setup_logging()
+log = logging.getLogger(__name__)
 
 
 @asynccontextmanager
