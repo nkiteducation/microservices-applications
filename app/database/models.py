@@ -1,11 +1,10 @@
 from datetime import datetime
 from uuid import UUID, uuid4
 
+from app.utils.enum import ContactMethod
 from sqlalchemy import Column, DateTime, Enum, ForeignKey, Table, Uuid, func
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-
-from app.core.enum import ContactMethod
 
 
 class CoreModel(DeclarativeBase, AsyncAttrs):
