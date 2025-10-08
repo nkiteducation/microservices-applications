@@ -1,12 +1,14 @@
 import asyncio
+import logging
 
+from app.core.settings import config
 from sqlalchemy.ext.asyncio import (
     async_scoped_session,
     async_sessionmaker,
     create_async_engine,
 )
 
-from app.core.settings import config
+log = logging.getLogger(__name__)
 
 
 class SessionManager:
@@ -25,7 +27,8 @@ class SessionManager:
         session = self.scoped_session()
         try:
             yield session
-        except Exception:
+        except Exception as e:
+            log.error("error in session: %s", e)
             await session.rollback()
             raise
         finally:
