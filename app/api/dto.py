@@ -13,19 +13,15 @@ RE_TECHNOLOGIES = r"^[\p{L}0-9\s+#\.]{2,50}$"
 
 
 class RequestsApplication(BaseModel):
-    first_name: Annotated[str, Field(alias="ferstName", pattern=RE_NAME)] = "firstName"
-    last_name: Annotated[str, Field(alias="lastName", pattern=RE_NAME)] = "lastName"
+    first_name: Annotated[str, Field(alias="ferstName", pattern=RE_NAME)]
+    last_name: Annotated[str, Field(alias="lastName", pattern=RE_NAME)]
     contact_method: Annotated[ContactMethod, Field(alias="contactMethod")] = (
         ContactMethod.EMAIL
     )
     phone: Annotated[str, PhoneNumberValidator("UA", "E164")] | None = None
     email: EmailStr | None = None
     telegram: Annotated[str, Field(pattern=RE_TELEGRAM)] | None = None
-    technologies: list[Annotated[str, Field(pattern=RE_TECHNOLOGIES)]] = [
-        "Python",
-        "FastAPI",
-        "SQLalchemy",
-    ]
+    technologies: list[Annotated[str, Field(pattern=RE_TECHNOLOGIES)]]
 
     model_config = {"populate_by_name": True, "from_attributes": True}
 
