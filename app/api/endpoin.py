@@ -10,8 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 log = logging.getLogger(__name__)
-routed = APIRouter(prefix="/applications")
-
+routed = APIRouter()
 
 @routed.get("/", response_model=dict[str, list[ResponsesApplication]])
 async def _get_all(session: AsyncSession = Depends(session.get)):
