@@ -5,6 +5,7 @@ from app.api.endpoin import routed
 from app.core import logger
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from app.core.settings import config
 
 logger.setup_logging()
 log = logging.getLogger(__name__)
@@ -17,5 +18,5 @@ async def lifespan(app: FastAPI):
     log.info("stop...")
 
 
-app = FastAPI(lifespan=lifespan, default_response_class=ORJSONResponse)
+app = FastAPI(lifespan=lifespan, default_response_class=ORJSONResponse, root_path=config.root_path)
 app.include_router(routed)

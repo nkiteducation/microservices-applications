@@ -27,6 +27,8 @@ class Logger(CoreSettings):
 
 
 class Settings(CoreSettings):
+    root_path: str
+
     database: DataBase
     logger: Logger
 

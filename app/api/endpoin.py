@@ -65,6 +65,8 @@ async def _create(
     session.add(app)
     await session.commit()
 
+    return {"message": "OK"}
+
 
 @routed.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def _delete(id: UUID, session: AsyncSession = Depends(session.get)):
@@ -75,3 +77,5 @@ async def _delete(id: UUID, session: AsyncSession = Depends(session.get)):
 
     await session.delete(app)
     await session.commit()
+
+    return {"message": "OK"}
