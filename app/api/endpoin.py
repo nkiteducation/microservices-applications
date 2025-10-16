@@ -12,6 +12,7 @@ from sqlalchemy.orm import selectinload
 log = logging.getLogger(__name__)
 routed = APIRouter()
 
+
 @routed.get("/", response_model=dict[str, list[ResponsesApplication]])
 async def _get_all(session: AsyncSession = Depends(session.get)):
     stmt = select(Application).options(selectinload(Application.technologies))
