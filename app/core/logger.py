@@ -1,6 +1,5 @@
 import logging
 import logging.handlers
-import re
 from logging.config import dictConfig
 from pathlib import Path
 
