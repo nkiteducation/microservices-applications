@@ -1,6 +1,8 @@
 import asyncio
 import logging
 
+import orjson
+
 from app.core.settings import config
 from sqlalchemy.ext.asyncio import (
     async_scoped_session,
@@ -13,7 +15,14 @@ log = logging.getLogger(__name__)
 
 class SessionManager:
     def __init__(self, url):
-        self.engine = create_async_engine(url)
+        self.engine = create_async_engine(
+            url,
+            pool_size=10,
+            max_overflow=20,
+            json_serializer=orjson.dumps,
+            json_deserializer=orjson.loads,
+            future=True,
+        )
         self.session_factory = async_sessionmaker(
             self.engine,
             autoflush=False,
