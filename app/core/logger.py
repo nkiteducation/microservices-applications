@@ -5,12 +5,7 @@ from pathlib import Path
 
 import orjson
 from app.core.settings import config
-
-B = 1
-KB = 1024 * B
-MB = 1024 * KB
-GB = 1024 * MB
-
+from app.utils.enum import Memory
 
 class JSONFormatter(logging.Formatter):
     def __init__(self, parameters: list, **kwargs):
@@ -76,7 +71,7 @@ LOGGING_CONFIG = {
             "class": logging.handlers.RotatingFileHandler,
             "formatter": "json",
             "filename": "logs/app.log",
-            "maxBytes": 5 * GB,
+            "maxBytes": 5 * Memory.GB,
             "backupCount": 3,
             "encoding": "utf-8",
             "level": "DEBUG",
