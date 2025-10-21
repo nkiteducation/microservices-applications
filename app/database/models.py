@@ -13,7 +13,7 @@ class CoreModel(DeclarativeBase, AsyncAttrs):
 
 class ID:
     id: Mapped[UUID] = mapped_column(
-        Uuid(True), primary_key=True, index=True, default=uuid4
+        Uuid(True), primary_key=True, default=uuid4
     )
 
 
